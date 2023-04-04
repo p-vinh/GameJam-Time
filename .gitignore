@@ -1,0 +1,8 @@
+Logs/
+.vscode/
+UserSettings/
+Temp/
+Library/
+*.csproj
+*.sln
+/Time_BurstDebugInformation_DoNotShip/
