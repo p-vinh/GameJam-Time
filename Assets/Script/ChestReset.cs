@@ -12,7 +12,7 @@ public class ChestReset : MonoBehaviour
     }
 
     private IEnumerator Reset() {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(120);
         close.SetActive(true);
         open.SetActive(false);
     }

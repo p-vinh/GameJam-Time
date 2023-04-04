@@ -68,18 +68,22 @@ public class PlayerController : TimeControlled
             }
             else {
                 rb.velocity += movementInput * stats.speed * Time.deltaTime;
+                RecoverStamina();
             }
             timeSinceStopped = 0f;
         } else {
             IsMoving = false;
-            timeSinceStopped += Time.deltaTime;
-            fillSpeedMultiplier = 1f + (timeSinceStopped / fillSpeedIncreaseTime);
-            currentStamina += Time.deltaTime * fillSpeed * fillSpeedMultiplier;
-            currentStamina = Mathf.Clamp(currentStamina, 0f, maxStamina);
-            staminaBar.SetHealth(currentStamina);
+            RecoverStamina();
         }
     }
 
+    private void RecoverStamina() {
+        timeSinceStopped += Time.deltaTime;
+        fillSpeedMultiplier = 1f + (timeSinceStopped / fillSpeedIncreaseTime);
+        currentStamina += Time.deltaTime * fillSpeed * fillSpeedMultiplier;
+        currentStamina = Mathf.Clamp(currentStamina, 0f, maxStamina);
+        staminaBar.SetHealth(currentStamina);
+    }
     private void UpdateAnimation() {
         IsMoving = true;
         if (Input.GetKey("w") && movementInput.y > 0) {
