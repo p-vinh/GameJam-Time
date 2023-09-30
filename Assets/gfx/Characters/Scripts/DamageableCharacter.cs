@@ -121,6 +121,6 @@ public class DamageableCharacter : MonoBehaviour, IDamageable {
 
     private void displayDamage(float damage) {
         TextMeshProUGUI txt = health.GetComponent<TextMeshProUGUI>();
-        txt.text = damage.ToString();
+        txt.text = Mathf.Round(damage).ToString();
     }
 }

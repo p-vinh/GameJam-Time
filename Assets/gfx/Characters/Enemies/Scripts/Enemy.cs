@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Enemy : TimeControlled
 {
+    private float gameTime = 0f;
     public enum State {
         idle,
         wandering,
@@ -24,12 +25,14 @@ public class Enemy : TimeControlled
     Rigidbody2D rb;
 
     private void Start() {
+        InvokeRepeating("IncreaseEnemyStats", 40f, 120f);
         animator = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         decisionTimeCount = Random.Range(decisionTime.x, decisionTime.y);
         ChooseMoveDirection();
     }
     private void Update() {
+        gameTime += Time.deltaTime;
         if(detectionArea.detectedObj.Count > 0) {
             currState = State.attack;
             // This may need to cahnge so that it can be modular for other enemies.
@@ -68,6 +71,13 @@ public class Enemy : TimeControlled
             Vector2 knockback = direction * stats.kbForce;
             damageable.OnHit(stats.attack, knockback);
         }
+    }
+
+    private void IncreaseEnemyStats() {
+        float increaseFactor = gameTime / 600f; // increase stats by 0.1% every minute
+        stats.health += (1f + increaseFactor);
+        stats.attack += (1f + increaseFactor);
+        stats.speed += increaseFactor;
     }
     
     private void ChooseMoveDirection() {
